@@ -1,3 +1,4 @@
+import Data.Char (ord, toLower)
 import Test.QuickCheck
 import DiamondKata
 
@@ -18,6 +19,17 @@ testNonEmpty (AlphaChar char) = length (diamondKata char) /= 0
 testOddLines :: AlphaChar -> Bool
 testOddLines (AlphaChar char) = mod (length (diamondKata char)) 2 == 1
 
+correctLines :: AlphaChar -> Int
+correctLines (AlphaChar char) = (ord (toLower char) - ord 'a') * 2 + 1
+
+testCorrectLines :: AlphaChar -> Bool
+testCorrectLines alChar@(AlphaChar char) = length (diamondKata char) == correctLines alChar
+
+tests :: [AlphaChar -> Bool]
+tests = [ testNonEmpty
+        , testOddLines
+        , testCorrectLines
+        ]
+
 main :: IO ()
-main = mapM_ quickCheck [testNonEmpty
-                        ,testOddLines]
+main = mapM_ quickCheckResult tests
