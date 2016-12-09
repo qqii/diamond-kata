@@ -59,6 +59,12 @@ testLinesReverse alchar = all reversable (kataLines alchar)
   where
     reversable line = line == reverse line
 
+testLineSpaces :: AlphaChar -> Bool
+testLineSpaces alchar@(AlphaChar char) = all correctSpaces (zip (kataLines alchar) ['A'..(toUpper char)])
+  where
+    correctSpaces (l, 'A') = length l == 1
+    correctSpaces (l, c)   = length (filter (==' ') l) == (correctLines (AlphaChar c) - 2)
+
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
         , testOddLines
@@ -68,6 +74,7 @@ tests = [ testNonEmpty
         , testLinesCorrectChar
         , testLinesCharsNo
         , testLinesReverse
+        , testLineSpaces
         ]
 
 main :: IO ()
