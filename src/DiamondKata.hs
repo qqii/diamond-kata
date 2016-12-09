@@ -8,13 +8,19 @@ import Data.Char (ord, chr, toUpper, isAlpha)
 validChar :: Char -> Bool
 validChar = isAlpha
 
+diamondKataLine :: Char -> String
+diamondKataLine char = replicate n uchar
+  where
+    uchar = toUpper char
+    n = (ord uchar - ord 'A') * 2 + 1
+
 diamondKataListMirror :: Char -> [String]
-diamondKataListMirror char = fmap (:"") ['A'..pchar]
+diamondKataListMirror char = fmap (diamondKataLine) ['A'..pchar]
   where
     pchar = chr ((ord . toUpper) char - 1)
 
 diamondKataList :: Char -> [String]
-diamondKataList char = mir ++ [[toUpper char]] ++ (reverse mir)
+diamondKataList char = mir ++ [diamondKataLine char] ++ (reverse mir)
   where
     mir = diamondKataListMirror char
 
