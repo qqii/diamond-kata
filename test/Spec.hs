@@ -37,11 +37,15 @@ testReverseLines (AlphaChar char) = result == reverseResult
     result = diamondKata char
     reverseResult = (unlines . reverse . lines) result
 
+testLinesNonEmpty :: AlphaChar -> Bool
+testLinesNonEmpty (AlphaChar char) = all notEmpty ((lines . diamondKata) char)
+
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
         , testOddLines
         , testCorrectLines
         , testReverseLines
+        , testLinesNonEmpty
         ]
 
 main :: IO ()
