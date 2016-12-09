@@ -52,7 +52,7 @@ testLinesCorrectChar alchar@(AlphaChar char) = all correctLetter (zip (kataLines
 testLinesCharsNo :: AlphaChar -> Bool
 testLinesCharsNo alchar@(AlphaChar char) = all correctCharNo (zip (kataLines alchar) ['A'..(toUpper char)])
   where
-    correctCharNo (l, c) = length l == correctLines (AlphaChar c)
+    correctCharNo (l, c) = length l == correctLines alchar
 
 testLinesReverse :: AlphaChar -> Bool
 testLinesReverse alchar = all reversable (kataLines alchar)
