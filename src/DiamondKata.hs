@@ -1,6 +1,12 @@
 module DiamondKata
-    ( someFunc
+    ( validChar
+    , diamondKata
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import Data.Char (isAlpha)
+
+validChar :: Char -> Bool
+validChar = isAlpha
+
+diamondKata :: Char -> String
+diamondKata = undefined
