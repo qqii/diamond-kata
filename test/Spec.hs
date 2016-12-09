@@ -22,16 +22,23 @@ noLines str = (length . lines) str
 testOddLines :: AlphaChar -> Bool
 testOddLines (AlphaChar char) = mod ((noLines . diamondKata) char) 2 == 1
 
-correctLines :: AlphaChar -> Int
-correctLines (AlphaChar char) = (ord (toLower char) - ord 'a') * 2 + 1
+correctLines :: Char -> Int
+correctLines char = (ord (toLower char) - ord 'a') * 2 + 1
 
 testCorrectLines :: AlphaChar -> Bool
-testCorrectLines alChar@(AlphaChar char) = (noLines . diamondKata) char == correctLines alChar
+testCorrectLines (AlphaChar char) = (noLines . diamondKata) char == correctLines char
+
+testReverseLines :: AlphaChar -> Bool
+testReverseLines (AlphaChar char) = result == reverseResult
+  where
+    result = diamondKata char
+    reverseResult = (unlines . reverse . lines) result
 
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
         , testOddLines
         , testCorrectLines
+        , testReverseLines
         ]
 
 main :: IO ()
