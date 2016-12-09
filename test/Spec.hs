@@ -35,8 +35,8 @@ testOddLines alchar = mod (kataLineCount alchar) 2 == 1
 correctLines :: AlphaChar -> Int
 correctLines (AlphaChar char) = (ord (toUpper char) - ord 'A') * 2 + 1
 
-testCorrectLines :: AlphaChar -> Bool
-testCorrectLines alchar = kataLineCount alchar == correctLines alchar
+testCorrectLineNo :: AlphaChar -> Bool
+testCorrectLineNo alchar = kataLineCount alchar == correctLines alchar
 
 testReverseLines :: AlphaChar -> Bool
 testReverseLines alchar = let kl = kataLines alchar in kl == reverse kl
@@ -45,17 +45,23 @@ testLinesNonEmpty :: AlphaChar -> Bool
 testLinesNonEmpty alchar = all notEmpty (kataLines alchar)
 
 testLinesCorrectChar :: AlphaChar -> Bool
-testLinesCorrectChar alchar@(AlphaChar char) = all foo (zip (kataLines alchar) ['A'..(toUpper char)])
+testLinesCorrectChar alchar@(AlphaChar char) = all correctLetter (zip (kataLines alchar) ['A'..(toUpper char)])
   where
-    foo (l, c) = head l == c
+    correctLetter (l, c) = head l == c
+
+testLinesCharsNo :: AlphaChar -> Bool
+testLinesCharsNo alchar@(AlphaChar char) = all correctCharNo (zip (kataLines alchar) ['A'..(toUpper char)])
+  where
+    correctCharNo (l, c) = length l == correctLines (AlphaChar c)
 
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
         , testOddLines
-        , testCorrectLines
+        , testCorrectLineNo
         , testReverseLines
         , testLinesNonEmpty
         , testLinesCorrectChar
+        , testLinesCharsNo
         ]
 
 main :: IO ()
