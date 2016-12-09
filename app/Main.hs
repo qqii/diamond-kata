@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import DiamondKata
 
 main :: IO ()
 main = someFunc

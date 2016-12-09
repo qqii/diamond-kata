@@ -1,4 +1,4 @@
-module Lib
+module DiamondKata
     ( someFunc
     ) where
 
