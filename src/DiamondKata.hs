@@ -9,4 +9,4 @@ validChar :: Char -> Bool
 validChar = isAlpha
 
 diamondKata :: Char -> String
-diamondKata = undefined
+diamondKata _ = "A"
