@@ -16,14 +16,17 @@ genAlphaChar = elements $ ['a'..'z'] ++ ['A'..'Z']
 testNonEmpty :: AlphaChar -> Bool
 testNonEmpty (AlphaChar char) = length (diamondKata char) /= 0
 
+noLines :: String -> Int
+noLines str = (length . lines) str
+
 testOddLines :: AlphaChar -> Bool
-testOddLines (AlphaChar char) = mod (length (diamondKata char)) 2 == 1
+testOddLines (AlphaChar char) = mod ((noLines . diamondKata) char) 2 == 1
 
 correctLines :: AlphaChar -> Int
 correctLines (AlphaChar char) = (ord (toLower char) - ord 'a') * 2 + 1
 
 testCorrectLines :: AlphaChar -> Bool
-testCorrectLines alChar@(AlphaChar char) = length (diamondKata char) == correctLines alChar
+testCorrectLines alChar@(AlphaChar char) = (noLines . diamondKata) char == correctLines alChar
 
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
