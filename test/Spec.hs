@@ -15,5 +15,9 @@ genAlphaChar = elements $ ['a'..'z'] ++ ['A'..'Z']
 testNonEmpty :: AlphaChar -> Bool
 testNonEmpty (AlphaChar char) = length (diamondKata char) /= 0
 
+testOddLines :: AlphaChar -> Bool
+testOddLines (AlphaChar char) = mod (length (diamondKata char)) 2 == 1
+
 main :: IO ()
-main = mapM_ quickCheck [testNonEmpty]
+main = mapM_ quickCheck [testNonEmpty
+                        ,testOddLines]
