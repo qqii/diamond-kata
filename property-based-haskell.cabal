@@ -1,0 +1,41 @@
+name:                property-based-haskell
+version:             0.0.0.1
+synopsis:            Exploring Property Based TDD with QuickCheck
+description:         Please see README.md
+homepage:            https://github.com/qqii/property-based-haskell#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Qi-rui Chen
+maintainer:          Qi-rui.Chen.2015@my.bristol.ac.uk
+copyright:           2016 Qi-rui
+category:            Beginner
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Lib
+  build-depends:       base >= 4.7 && < 5
+  default-language:    Haskell2010
+
+executable property-based-haskell-exe
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , property-based-haskell
+  default-language:    Haskell2010
+
+test-suite property-based-haskell-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , property-based-haskell
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/qqii/property-based-haskell
