@@ -54,6 +54,11 @@ testLinesCharsNo alchar@(AlphaChar char) = all correctCharNo (zip (kataLines alc
   where
     correctCharNo (l, c) = length l == correctLines (AlphaChar c)
 
+testLinesReverse :: AlphaChar -> Bool
+testLinesReverse alchar = all reversable (kataLines alchar)
+  where
+    reversable line = line == reverse line
+
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
         , testOddLines
@@ -62,6 +67,7 @@ tests = [ testNonEmpty
         , testLinesNonEmpty
         , testLinesCorrectChar
         , testLinesCharsNo
+        , testLinesReverse
         ]
 
 main :: IO ()
