@@ -19,26 +19,26 @@ notEmpty str = length str /= 0
 testNonEmpty :: AlphaChar -> Bool
 testNonEmpty (AlphaChar char) = (notEmpty . diamondKata) char
 
-noLines :: String -> Int
-noLines str = (length . lines) str
+kataLines :: AlphaChar -> [String]
+kataLines = lines . diamondKata . unAlphaChar
+
+kataLineCount :: AlphaChar -> Int
+kataLineCount = length . kataLines
 
 testOddLines :: AlphaChar -> Bool
-testOddLines (AlphaChar char) = mod ((noLines . diamondKata) char) 2 == 1
+testOddLines alchar = mod (kataLineCount alchar) 2 == 1
 
-correctLines :: Char -> Int
-correctLines char = (ord (toLower char) - ord 'a') * 2 + 1
+correctLines :: AlphaChar -> Int
+correctLines (AlphaChar char) = (ord (toLower char) - ord 'a') * 2 + 1
 
 testCorrectLines :: AlphaChar -> Bool
-testCorrectLines (AlphaChar char) = (noLines . diamondKata) char == correctLines char
+testCorrectLines alchar = kataLineCount alchar == correctLines alchar
 
 testReverseLines :: AlphaChar -> Bool
-testReverseLines (AlphaChar char) = result == reverseResult
-  where
-    result = diamondKata char
-    reverseResult = (unlines . reverse . lines) result
+testReverseLines alchar = let kl = kataLines alchar in kl == reverse kl
 
 testLinesNonEmpty :: AlphaChar -> Bool
-testLinesNonEmpty (AlphaChar char) = all notEmpty ((lines . diamondKata) char)
+testLinesNonEmpty alchar = all notEmpty (kataLines alchar)
 
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
