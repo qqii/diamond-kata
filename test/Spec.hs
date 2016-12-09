@@ -13,8 +13,11 @@ instance Show AlphaChar where
 genAlphaChar :: Gen Char
 genAlphaChar = elements $ ['a'..'z'] ++ ['A'..'Z']
 
+notEmpty :: String -> Bool
+notEmpty str = length str /= 0
+
 testNonEmpty :: AlphaChar -> Bool
-testNonEmpty (AlphaChar char) = length (diamondKata char) /= 0
+testNonEmpty (AlphaChar char) = (notEmpty . diamondKata) char
 
 noLines :: String -> Int
 noLines str = (length . lines) str
