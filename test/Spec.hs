@@ -10,8 +10,9 @@ newtype AlphaChar = AlphaChar { unAlphaChar :: Char }
 instance Arbitrary AlphaChar where
   arbitrary = AlphaChar <$> genAlphaChar
   shrink (AlphaChar 'A') = []
-  shrink (AlphaChar 'a') = []
-  shrink (AlphaChar char) = [(AlphaChar . chr) ((ord . toUpper) char - 1)]
+  shrink (AlphaChar char) = [AlphaChar pchar]
+    where
+      pchar = chr ((ord . toUpper) char - 1)
 
 instance Show AlphaChar where
   show ch = show $ unAlphaChar ch

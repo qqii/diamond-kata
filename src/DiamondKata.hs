@@ -3,15 +3,20 @@ module DiamondKata
     , diamondKata
     ) where
 
-import Data.Char (ord, toLower, isAlpha)
+import Data.Char (ord, chr, toUpper, isAlpha)
 
 validChar :: Char -> Bool
 validChar = isAlpha
 
-diamondKataList :: Char -> [String]
-diamondKataList char = replicate ls "A"
+diamondKataListMirror :: Char -> [String]
+diamondKataListMirror char = fmap (:"") ['A'..pchar]
   where
-    ls = (ord (toLower char) - ord 'a') * 2 + 1
+    pchar = chr ((ord . toUpper) char - 1)
+
+diamondKataList :: Char -> [String]
+diamondKataList char = mir ++ [[toUpper char]] ++ (reverse mir)
+  where
+    mir = diamondKataListMirror char
 
 diamondKata :: Char -> String
 diamondKata char = unlines $ diamondKataList char
