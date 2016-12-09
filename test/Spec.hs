@@ -47,7 +47,7 @@ testLinesNonEmpty alchar = all notEmpty (kataLines alchar)
 testLinesCorrectChar :: AlphaChar -> Bool
 testLinesCorrectChar alchar@(AlphaChar char) = all correctLetter (zip (kataLines alchar) ['A'..(toUpper char)])
   where
-    correctLetter (l, c) = head l == c
+    correctLetter (l, c) = head (filter (/=' ') l) == c
 
 testLinesCharsNo :: AlphaChar -> Bool
 testLinesCharsNo alchar@(AlphaChar char) = all correctCharNo (zip (kataLines alchar) ['A'..(toUpper char)])
@@ -62,8 +62,8 @@ testLinesReverse alchar = all reversable (kataLines alchar)
 testLineSpaces :: AlphaChar -> Bool
 testLineSpaces alchar@(AlphaChar char) = all correctSpaces (zip (kataLines alchar) ['A'..(toUpper char)])
   where
-    correctSpaces (l, 'A') = length l == 1
-    correctSpaces (l, c)   = length (filter (==' ') l) == (correctLines (AlphaChar c) - 2)
+    correctSpaces (l, 'A') = length (filter (==' ') l) == correctLines alchar - 1
+    correctSpaces (l, c)   = length (filter (==' ') l) == correctLines alchar - 2
 
 tests :: [AlphaChar -> Bool]
 tests = [ testNonEmpty
